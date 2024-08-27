@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 require('dotenv').config(); // Ensure environment variables are loaded
 
-// MongoDB connection URL from environment variable or default to localhost
-const mongoURI = process.env.MONGO_URI || 'mongodb://localhost:27017/zgoup';
+// MongoDB connection URL from environment variable or fallback to localhost
+const mongoURI = process.env.MONGO_URI || 'mongodb+srv://<atlasadmin>:<1354@atlas>@cluster0.mongodb.net/zgroup?retryWrites=true&w=majority';
 
 // Function to connect to MongoDB
 const connectToDatabase = async () => {
