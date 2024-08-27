@@ -17,7 +17,9 @@ const app = express();
 connectToDatabase();
 
 // Middleware
-app.use(cors()); // Enable Cross-Origin Resource Sharing
+app.use(cors({
+  origin: process.env.CLIENT_URL // Allow requests from your frontend URL
+}));
 app.use(express.json()); // Parse JSON bodies
 
 // Twilio configuration
@@ -58,9 +60,12 @@ app.use('/api/feedback', feedbackRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/promotions', promotionSetupRoutes);
 
-// Default route
-app.get('/', (req, res) => {
-  res.send('Welcome to the API');
+// Serve static files from the React app's build folder
+app.use(express.static(path.join(__dirname, 'client/build')));
+
+// Handle frontend routes
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
 });
 
 // Error handling middleware
